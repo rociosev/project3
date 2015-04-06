@@ -11,14 +11,38 @@ body{
 }
 
 .top-nav-left{
-    
     float: left;
     height: 50%;
     display: block;
     margin-right: auto;
     margin-left: auto;
     line-height: 20px;
-    font-size:16px;
+ /*   font-size:16px;*/
+  font-size: 12px;
+}
+a{
+    color: #ffffff;
+}
+.container-fluid{
+    background: #780000;
+}
+.menuLeft{
+      text-decoration: none;
+      padding-top: 2px;
+    padding-right: 8px;
+        color: #ffffff;
+        font-size: 12px;
+        text-align: left;
+}
+
+.menuRight{
+      text-decoration: none;
+      padding-top: 2px;
+    padding-left: 8px;
+        color: #ffffff;
+        font-size: 12px;
+        text-align: right;
+
 }
 
 .menu1{
@@ -26,6 +50,7 @@ body{
       padding-top: 2px;
     padding-right: 8px;
         color: #ffffff;
+        font-size: 12px;
 }
 .menu2{
      text-decoration: none;
@@ -57,7 +82,10 @@ a:hover{
     margin-right: auto;
     margin-left: auto;
     line-height: 20px;
-   font-size:16px;
+   /*font-size:16px;*/
+    font-size: 12px;
+    
+    
 }
 
 .menu5{
@@ -65,6 +93,7 @@ a:hover{
       padding-top: 2px;
     padding-right: 8px;
         color: #ffffff;
+        font-size: 12px;
 }
 .menu6{
      text-decoration: none;
@@ -156,4 +185,17 @@ a:hover{
     color: #000000;
 }
 
+.navigation-top{
+    padding-top:5px;
+    background-color: #780000;
+    content: " ";
+    display: table;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.intro-table{
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
 
