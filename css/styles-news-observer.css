@@ -198,4 +198,13 @@ a:hover{
     margin-top: 50px;
     margin-bottom: 20px;
 }
-
+.container{
+    margin: 0px;
+    margin-right: 0px;
+}
+.story-divide{
+    text-align: center;
+}
+.body-cont{
+    margin-left: 100px;
+}
