@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<!-- field 2 = Georgia -->
+<ROWSET>
+
+<ROW>
+<FIELD1>Georgia</FIELD1> <!--state-->
+<FIELD2>96904943 </FIELD2> <!--Georgia-->
+<FIELD3>39904263</FIELD3> <!--Kentucky-->
+<FIELD4>62846088</FIELD4> <!--North Carolina-->
+<FIELD5>43588224</FIELD5> <!--South Carolina-->
+<FIELD6>46472248</FIELD6> <!--Tennessee-->
+
+
+</ROW>
+<ROW>
+<FIELD1>Kentucky</FIELD1>
+<FIELD2>99102390</FIELD2> <!--yr 2011--> <!--Georgia-->
+<FIELD3>44339375</FIELD3> <!--Kentucky-->
+<FIELD4>65237195</FIELD4> <!--North Carolina-->
+<FIELD5>43822584</FIELD5> <!--South Carolina-->
+<FIELD6>49237175</FIELD6> <!--Tennessee-->
+</ROW>
+
+<ROW>
+<FIELD1>North Carolina</FIELD1>
+<FIELD2>101700360</FIELD2> <!--Georgia-->  <!--yr 2012-->
+<FIELD3>40604242</FIELD3> <!--Kentucky-->
+<FIELD4>68705713</FIELD4> <!--North Carolina-->
+<FIELD5>44880184</FIELD5> <!--South Carolina-->
+<FIELD6>54235720</FIELD6> <!--Tennessee-->
+</ROW>
+
+<ROW>
+<FIELD1>South Carolina</FIELD1>
+<FIELD2>103154938</FIELD2> <!--Georgia--> <!--yr 2013-->
+<FIELD3>43323962</FIELD3> <!--Kentucky-->
+<FIELD4>71197380</FIELD4> <!--North Carolina-->
+<FIELD5>46287672</FIELD5> <!--South Carolina-->
+<FIELD6>57204822</FIELD6> <!--Tennessee-->
+</ROW>
+
+<ROW>
+<FIELD1>Tennessee</FIELD1>
+<FIELD2>101883506</FIELD2> <!--Georgia--> <!--yr 2014-->
+<FIELD3>44768495</FIELD3> <!--Kentucky-->
+<FIELD4>73081417</FIELD4> <!--North Carolina-->
+<FIELD5>44956630</FIELD5> <!--South Carolina-->
+<FIELD6>57842344</FIELD6> <!--Tennessee-->
+
+
+</ROW>
+
+<!--<ROW>
+<FIELD1>Virginia</FIELD1>
+<FIELD7>40,020,721</FIELD7>
+<FIELD7>42,057,957</FIELD7>
+<FIELD7>45,275,483</FIELD7>
+<FIELD7>44,902,386</FIELD7>
+<FIELD7>44,250,932</FIELD7>
+
+</ROW>-->
+
+</ROWSET>

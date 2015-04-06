@@ -1,0 +1,230 @@
+             <script> 
+               var states = [];
+               var kentucky = [];
+               var georgia = [];
+               var southCarolina = [];
+               var northCarolina = [];
+               var tennessee = [];
+               var virginia = [];
+               var year = [];
+                var total10 = [];
+   
+           $(document).ready(function(){
+               console.log("chart 2 ready");
+               loadXML2();
+           });
+       
+       function loadXML2(){
+             console.log("loadXML for chart 2 has begun!");
+       //ajax call
+       $.ajax({
+       type:"GET",
+       url: "percentagesXML.xml",
+       dataType: "xml",
+       success: parseXML2
+       })
+       }
+       
+       function parseXML2(xml){
+       //loop through data
+       console.log("xml chart2");
+        $(xml).find("ROW").each(function(){ //index
+           console.log("loadXML chart2 has begun!");
+                   var $ROW = $(this);
+                   states.push($ROW.find("FIELD1").text());
+                   georgia.push(parseFloat(($ROW.find("FIELD2").text())));
+                   year.push(parseFloat(($ROW.find("FIELD8").text())));
+                   total10.push(parseFloat($ROW.find("FIELD9").text()));
+                   kentucky.push(parseFloat($ROW.find("FIELD3").text()));
+                   northCarolina.push(parseFloat($ROW.find("FIELD4").text()));
+                   southCarolina.push(parseFloat($ROW.find("FIELD5").text()));
+                   tennessee.push(parseFloat($ROW.find("FIELD6").text()));
+                   
+      
+                     buildchart2();
+                     })
+   
+       function buildchart2(){
+           console.log("buildChart2 is loaded");
+           console.log(year);
+           console.log(total10);
+       $('#chart2').highcharts({
+               chart: {
+                   plotBackgroundColor: null,
+                   plotBorderWidth: null,
+                   plotShadow: false
+               },
+               title: {
+                   text: 'Browser market shares at a specific website, 2014'
+               },
+           
+               plotOptions: {
+                   pie: {
+                       allowPointSelect: true,
+                       cursor: 'pointer',
+                       dataLabels: {
+                           enabled: true
+                       },
+                       showInLegend: false
+                   }
+               },
+               series: [{
+                   type: 'pie',
+                   name: 'Total',
+                   data: [
+                       {
+                           name: 'year',
+                           y: total10[0],
+                           sliced: false,
+                           selected: false
+                       },
+                      
+                       /*
+                               {
+                           name: 'Kentucky',
+                           y: 60.81,
+                           sliced: false,
+                           selected: false
+                       },
+                       
+                         {
+                           name: 'North Carolina',
+                           y: 59.83,
+                           sliced: true,
+                           selected: true
+                       },
+                             {
+                           name: 'South Carolina',
+                           y: 61.97,
+                           sliced: false,
+                           selected: false
+                       },
+                     
+                         {
+                           name: 'Tennessee',
+                           y: 64.79,
+                           sliced: false,
+                           selected: false
+                       },*/
+                         
+                   ]
+               }]
+           });
+       };
+       };
+   
+       </script>  <!--ENDS CHART 2------------------------------------------------>
+       
+            
+             
+             
+             
+             
+             
+             <!--
+             <script> 
+               var states = [];
+               var kentucky = [];
+               var georgia = [];
+               var southCarolina = [];
+               var northCarolina = [];
+               var tennessee = [];
+               var virginia = [];
+   
+           $(document).ready(function(){
+               console.log("chart 2 ready");
+               loadXML2();
+           });
+       
+       function loadXML2(){
+             console.log("loadXML for chart 2 has begun!");
+       //ajax call
+       $.ajax({
+       type:"GET",
+       url: "durhamLunchXML.xml",
+       dataType: "xml",
+       success: parseXML2
+       })
+       }
+       
+       function parseXML2(xml){
+       //loop through data
+       console.log("xml chart2");
+        $(xml).find("ROW").each(function(){ //index
+           console.log("loadXML chart2 has begun!");
+                   var $ROW = $(this);
+                   states.push($ROW.find("FIELD1").text());
+                   georgia.push(parseFloat(($ROW.find("FIELD2").text())));
+                   kentucky.push(parseFloat($ROW.find("FIELD3").text()));
+                   northCarolina.push(parseFloat($ROW.find("FIELD4").text()));
+                   southCarolina.push(parseFloat($ROW.find("FIELD5").text()));
+                   tennessee.push(parseFloat($ROW.find("FIELD6").text()));
+                   
+      
+                     buildchart2();
+                     })
+   
+       function buildchart2(){
+           console.log("buildChart2 is loaded");
+       $('#chart2').highcharts({
+               chart: {
+                   plotBackgroundColor: null,
+                   plotBorderWidth: null,
+                   plotShadow: false
+               },
+               title: {
+                   text: 'Browser market shares at a specific website, 2014'
+               },
+           
+               plotOptions: {
+                   pie: {
+                       allowPointSelect: true,
+                       cursor: 'pointer',
+                       dataLabels: {
+                           enabled: true
+                       },
+                       showInLegend: false
+                   }
+               },
+               series: [{
+                   type: 'pie',
+                   name: 'States',
+                   data: [
+                       {
+                           name: 'Georgia',
+                           y: georgia[0],
+                           sliced: false,
+                           selected: false
+                       },
+                               {
+                           name: 'Kentucky',
+                           y: kentucky[0],
+                           sliced: false,
+                           selected: false
+                       },
+                       
+                         {
+                           name: 'North Carolina',
+                           y: northCarolina[0],
+                           sliced: true,
+                           selected: true
+                       },
+                             {
+                           name: 'South Carolina',
+                           y: southCarolina[0],
+                           sliced: false,
+                           selected: false
+                       },
+                     
+                         {
+                           name: 'Tennessee',
+                           y: tennessee[0],
+                           sliced: false,
+                           selected: false
+                       },
+                         
+                   ]
+               }]
+           });
+       };
+       };-->

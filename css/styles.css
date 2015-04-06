@@ -1,0 +1,25 @@
+
+.ad{
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+    border-bottom: 1px solid #dcdcdc;
+    width: 940px;
+    margin: 71px;
+    
+}
+.header{
+    height: 100px;
+    background: #555555;
+}
+
+.container{
+    width:1180px;
+}
+.middle-row{
+    border-right: 1px solid #dcdcdc !important;
+    border-left: 1px solid #dcdcdc !important;
+    margin-bottom: 20px;
+    min-height: 300px;
+}

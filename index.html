@@ -1,0 +1,552 @@
+<head>
+  <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- News and observer style sheet-->
+    <link href="css/styles-news-observer.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+            <link href="css/styles-news-observer-body.css" rel="stylesheet">
+ 
+ 
+   <!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.6/css/jquery.dataTables.css">
+  
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+   
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.6/js/jquery.dataTables.js"></script>
+    
+    
+    <!-- high chart-->
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <!-- extras-->
+<link href="table1.js" rel="stylesheet">
+    <script>
+    $(document).ready(function () {
+        console.log("tableStarting");
+
+    $('#table_id').DataTable();
+    
+    paging: true;
+    searching: true;
+});
+    </script>
+    
+    </head>
+
+<body>
+<!-- CHARTS BEGIN------------------------------------------------------------------------------------------>
+ <!-- Chart one starts-->
+             <script>    
+                var states = [];
+                var kentucky = [];
+                var georgia = [];
+                var southCarolina = [];
+                var northCarolina = [];
+                var tennessee = [];
+                var virginia = [];
+                
+            $(document).ready(function(){
+                console.log("chart1 ready");
+                loadXML();
+            });
+        
+        function loadXML(){
+              console.log("loadXML1 chart 1 has begun!");
+        //ajax call
+        $.ajax({
+        type:"GET",
+        url: "breakfast-served.xml",
+        dataType: "xml",
+        success: parseXML
+            })
+        }
+        
+        function parseXML(xml){
+        //loop through data
+        console.log("parseXML chart1");
+         $(xml).find("ROW").each(function(){ //index
+            console.log("loadXML chart1 has begun!");
+                    var $ROW = $(this);
+                    states.push($ROW.find("FIELD1").text());
+                    georgia.push(parseFloat(($ROW.find("FIELD2").text())));
+                    kentucky.push(parseFloat($ROW.find("FIELD3").text()));
+                    northCarolina.push(parseFloat($ROW.find("FIELD4").text()));
+                    southCarolina.push(parseFloat($ROW.find("FIELD5").text()));
+                    tennessee.push(parseFloat($ROW.find("FIELD6").text()));
+                
+     
+        buildchart();
+                      })
+        function buildchart(){
+        $('#chart1').highcharts({
+            title: {
+                text: 'School sponsored lunch participation',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Lunches served in 2010-2014',
+                x: -20
+            },
+            xAxis: {
+                title: {
+                    text: 'Fiscal year'
+                },
+                categories: [2010, 2011, 2012, 2013, 2014]
+            },
+            yAxis: {
+                title: {
+                    text: 'Lunches served (Millions)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+         
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+               verticalAlign: 'top',
+                x: -30,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Georgia',
+                data:  georgia
+            }, {
+                name: 'Kentucky',
+                data: kentucky
+            }, {
+                name: 'North Carolina',
+                data: northCarolina
+            },
+            {
+                name: 'South Carolina',
+                data: southCarolina
+            },
+            {
+                name: 'Tennessee',
+                data: tennessee
+            
+            }]
+        });
+    };
+        }
+            </script> <!-------------ENDS CHART 1------------------------------------------------->
+   <!--START CHART 2------------------------------------------------------------------------>
+             <script>
+               
+                var free = [];
+                var reduced = [];
+                var full = [];
+                var total = [];
+                var categories = [];
+        
+           $(document).ready(function(){
+               console.log("chart 2 ready");
+               loadXML2();
+           });
+       
+       function loadXML2(){
+             console.log("loadXML for chart 2 has begun!");
+       //ajax call
+       $.ajax({
+       type:"GET",
+       url: "durhamLunchXML.xml",
+       dataType: "xml",
+       success: parseXML2
+       })
+       }
+       
+       function parseXML2(xml){
+       //loop through data
+       console.log("xml chart2");
+        $(xml).find("ROW").each(function(){ //index
+           console.log("loadXML chart2 has begun!");
+                   var $ROW = $(this);
+                   free.push(parseFloat(($ROW.find("FIELD2").text())));
+                   reduced.push(parseFloat(($ROW.find("FIELD3").text())));
+                   full.push(parseFloat($ROW.find("FIELD4").text()));
+                   total.push(parseFloat($ROW.find("FIELD5").text()));
+                   categories.push(parseFloat($ROW.find("FIELD1").text()))
+            
+                     buildchart2();
+                     })
+   
+       function buildchart2(){
+           console.log("buildChart2 is loaded");
+           
+       $('#chart2').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Free, reduced, and full price lunch 2010-2014'
+        },
+        subtitle: {
+            text: 'Durham County'
+        },
+        xAxis: {
+            categories: 
+               categories
+            ,
+            crosshair: true
+        },
+        yAxis: {
+            min:1000,
+            title: {
+                text: 'Durham schools lunch statistics'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Free',
+            data: free,
+
+        }, {
+            name: 'Reduced',
+            data: reduced,
+
+        },
+        
+        {
+            name: 'Full price',
+            data: full,
+
+        },
+        
+        {
+            name: 'Total for the year',
+            data: total,
+
+        }]
+    });
+};
+       }
+       </script>  <!--ENDS CHART 2------------------------------------------------>
+ 
+ <div class="container ">
+   
+    <div class="logo col-lg-12 cold-md-12 cold-sm-12"><!-- logo-->
+   <a href="http://www.newsobserver.com/" target="_top">
+                <img src="images/header.png" alt="The News and Observer | NewsObserver.com" class="img-respinsibe center-block">
+            </a>
+    <a href="http://www.newsobserver.com/" target="_top">
+                <img src="images/header2.png" alt="The News and Observer | NewsObserver.com" class="img-respinsibe center-block">
+            </a>
+ </div> <!-- logo-->
+  <div class="body-cont col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="title-box col-sm-6 col-md-7">
+    <h1>Where do we stand?<h1>
+        <h2> <!-- subtitle-->
+            A look at food security through public school's lunch statistics
+        </h2>
+        <h3> <!-- by-line-->
+            BY ROCIO SEVILLA DIEGUEZ - ROCIOSEV@LIVE.UNC.EDU
+        </h3>
+        <h4>
+            04/05/2015 | Updates: 04/05/2015 1:00 PM
+        </h4>
+        </div> <!-- closses subtitle row-->
+     <a href="http://www.newsobserver.com/" target="_top">
+                <img src="images/school-lunch.png" alt="The News and Observer | NewsObserver.com" class="img-respinsibe center-block">
+            </a>
+     <div class="row">
+    <div class="intro-text col-lg-12-col-md-12 col-sm-12">
+ <p>The federal school system assures every student receives proper luch and breakfast by prviding free breakfast to all students and providing free or reduced lunch to students of families who meet certain income guideliness. </p>
+    <p> The free and reduced lunch eligibility is determined based on the head of household's income. To be eligible for reduced lunch, the government accounts for $7,511 per household member, i.e. a family of four should have an income below $44,123. Free lunch eligibility accounts for $5,278 per member, i.e. below $31,005 for a family of four.</p>
+ </div>
+    <br>
+        <a href="http://www.newsobserver.com/" target="_top">
+                <img src="images/story-divide.png" alt="The News and Observer | NewsObserver.com" class="img-respinsibe center-block">
+            </a>
+            <div class="row">
+    <div class="intro-text col-lg-12-col-md-12 col-sm-12">
+ <p>The chart below illustrates the overall participation of students in the school sponsored lunch programs across states naighboring North Carolina.
+    <p> Click on the name of each state to easily compare specific ones.</p>
+    </div>
+     <div class="row">
+ <div class="chart1 col-lg-8-col-md-8 col-sm-12">
+   <div id="chart1"></div> <!-- chart 1 display style="width:100%; height: 100%"-->
+  </div> <!-- closses chart1-->
+     </div>
+    <div class="row">
+    <div class="intro-text col-lg-2 col-md-2 col-sm-12">
+ <p>Since 2010, participation in Durham school's lunch programs has constatly increased, and by the data shown below it is evident that the income of participants is not equally distributed.</p>
+ </div>
+  <div class="chart2 col-lg-8-col-md-8 col-sm-12"> <!-- closses chart2-->
+   <div id="chart2" ></div> <!-- chart 2 display style="width:100%; height: 100%"-->
+  </div>
+
+ <div class="col-lg-2 col-md-2 col-sm-12">
+ <p>box on the right</p>
+ </div>
+ </div>
+ 
+<div class="row">
+<div class="table col-lg-6 col-md-6 col-sm-6"> <!-- opens table -->
+ <!-- <div div class="table col-lg-6 col-md-6 col-sm-12"></div><!--table-->
+<table id="table_id" class="display"> <!-- table starts-->
+    <thead>
+        <tr>
+            <th>School name</th>
+            <th>percent of students on <br>
+            reduced lunch</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Bethesda</td>
+            <td>82.56%</td>
+        </tr>
+        <tr>
+            <td>Burton</td>
+            <td>91.38%</td>
+        </tr>
+        <tr>
+            <td>Club Blvd.</td>
+            <td>61.45%</td>
+        </tr>
+        <tr>
+            <td>Creekside</td>
+            <td>46.60%</td>
+        </tr>
+        <tr>
+            <td>Easley</td>
+            <td>24.66%</td>
+        </tr>
+        <tr>
+            <td>Eastway</td>
+            <td>99.08%</td>
+        </tr>
+        <tr>
+            <td>Eno Valley</td>
+            <td>87.32%</td>
+        </tr>
+        <tr>
+            <td>Fayetteville St.</td>
+            <td>98.15%</td>
+        </tr>
+        <tr>
+            <td>Forest View</td>
+            <td>60.99%</td>
+        </tr>
+        <tr>
+            <td>Glenn</td>
+            <td>94.74%</td>
+        </tr>
+        <tr>
+            <td>Harris</td>
+            <td>86.39%</td>
+        </tr>
+        <tr>
+            <td>Hillandale</td>
+            <td>59.26%</td>
+        </tr>
+         <tr>
+            <td>Holt</td>
+            <td>88.59%</td>
+        </tr>
+         <tr>
+            <td>Hope Valley</td>
+            <td>62.40%</td>
+        </tr>
+         <tr>
+            <td>Lakewood</td>
+            <td>98.75%</td>
+        </tr>
+          <tr>
+            <td>Little River</td>
+            <td>39.90%</td>
+        </tr>
+           <tr>
+            <td>Mangum</td>
+            <td>28.46%</td>
+        </tr>
+           <tr>
+            <td>Merrick-Moore</td>
+            <td>90.67%</td>
+        </tr>
+           <tr>
+            <td>Morehead</td>
+            <td>38.98%</td>
+        </tr>
+            <tr>
+            <td>Oak Grove</td>
+            <td>81.00%</td>
+        </tr>
+             <tr>
+            <td>Parkwood</td>
+            <td>72.23%</td>
+        </tr>
+              <tr>
+            <td>Pearson</td>
+            <td>88.51%</td>
+        </tr>
+               <tr>
+            <td>Pearsontown</td>
+            <td>31.06%</td>
+        </tr>
+                <tr>
+            <td>Powe</td>
+            <td>66.75%</td>
+        </tr>
+                 <tr>
+            <td>Sandy Ridge</td>
+            <td>57.95%</td>
+        </tr>
+                  <tr>
+            <td>Smith</td>
+            <td>99.51%</td>
+        </tr>
+                   <tr>
+            <td>Southwest</td>
+            <td>63.76%</td>
+        </tr>
+                    <tr>
+            <td>Spring Valley</td>
+            <td>66.40%</td>
+        </tr>
+ <tr>
+            <td>Spaulding</td>
+            <td>99.09%</td>
+        </tr>
+  <tr>
+            <td>Watts</td>
+            <td>46.73%</td>
+        </tr>
+  <!-- End of elementary schools-->
+   <!-- Start of middle schools-->
+     <tr>
+            <td>Broogden</td>
+            <td>76.10%</td>
+        </tr>
+       <tr>
+            <td>Carrington</td>
+            <td>64.35%</td>
+        </tr>
+         <tr>
+            <td>School for Creative Studies</td>
+            <td>52.87%</td>
+        </tr>
+  <tr>
+            <td>Githens</td>
+            <td>71.78%</td>
+        </tr>
+  <tr>
+            <td>Lakewood Montessori</td>
+            <td>48.28%</td>
+        </tr>
+  <tr>
+            <td>Lucas</td>
+            <td>63.72%</td>
+        </tr>
+  <tr>
+            <td>Lowe's Grove</td>
+            <td>83.62%</td>
+        </tr>
+<tr>
+            <td>Neal</td>
+            <td>89.25%</td>
+        </tr>
+<tr>
+            <td>Pearson Middle</td>
+            <td>91.38%</td>
+        </tr>
+<tr>
+            <td>Rogers-Herr</td>
+            <td>45.38%</td>
+        </tr>
+<tr>
+            <td>Shepard</td>
+            <td>71.78%</td>
+        </tr>
+<!-- End of middle schools--> 
+<!-- Start of high schools-->
+<tr>
+            <td>Durham PLC</td>
+            <td>71.94%</td>
+        </tr>
+<tr>
+            <td>Durham Sch. of Arts</td>
+            <td>38.55%</td>
+        </tr>
+<tr>
+            <td>Hospital School</td>
+            <td>25.71%</td>
+        </tr>
+<tr>
+            <td>Early College at NCCU</td>
+            <td>57.86%</td>
+        </tr>
+<tr>
+            <td>Hillside</td>
+            <td>91.38%</td>
+        </tr>
+<tr>
+            <td>Hillside New Tech</td>
+            <td>52.62</td>
+        </tr>
+<tr>
+            <td>Jordan</td>
+            <td>41.85%</td>
+        </tr>
+<tr>
+            <td>Lakeview</td>
+            <td>95.40%</td>
+        </tr>
+<tr>
+            <td>Middle College High</td>
+            <td>10.94%</td>
+        </tr>
+<tr>
+            <td>Northern</td>
+            <td>60.79%</td>
+        </tr>
+<tr>
+            <td>Riverside</td>
+            <td>51.53%</td>
+        </tr>
+<tr>
+            <td>City of Medicine Acad.</td>
+            <td>56.36%</td>
+        </tr>
+<tr>
+            <td>Southern SES</td>
+            <td>73.38%</td>
+        </tr>
+<tr>
+            <td>Southern Engineering</td>
+            <td>63.04%</td>
+        </tr>
+  
+    </tbody>
+</table> <!-- table ends-->
+</div> <!-- table div ends-->
+<div class="col-lg-6 col-md-6 col-sm-6">
+    hi
+</div>
+</div><!--row closses-->
+    </div> <!--closses body-cont-->
+</div> <!-- container ends-->
+
+           <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+</body>

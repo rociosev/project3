@@ -1,0 +1,123 @@
+  <!--highcharts things-->
+             <script src="jquery-1.2.6.js" type="text/javascript"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+            <script src="http://code.highcharts.com/highcharts.js"></script>
+             <script>
+               
+                var free = [];
+                var reduced = [];
+                var full = [];
+                var total = [];
+                var categories = [];
+                  
+               
+               
+    
+           $(document).ready(function(){
+               console.log("chart 2 ready");
+               loadXML2();
+           });
+       
+       function loadXML2(){
+             console.log("loadXML for chart 2 has begun!");
+       //ajax call
+       $.ajax({
+       type:"GET",
+       url: "durhamLunchXML.xml",
+       dataType: "xml",
+       success: parseXML2
+       })
+       }
+       
+       function parseXML2(xml){
+       //loop through data
+       console.log("xml chart2");
+        $(xml).find("ROW").each(function(){ //index
+           console.log("loadXML chart2 has begun!");
+                   var $ROW = $(this);
+                   free.push(parseFloat(($ROW.find("FIELD2").text())));
+                   reduced.push(parseFloat(($ROW.find("FIELD3").text())));
+                   full.push(parseFloat($ROW.find("FIELD4").text()));
+                   total.push(parseFloat($ROW.find("FIELD5").text()));
+                   categories.push(parseFloat($ROW.find("FIELD1").text()))
+            
+      
+                     buildchart2();
+                     })
+   
+       function buildchart2(){
+           console.log("buildChart2 is loaded");
+           console.log(free);
+           console.log(reduced);
+           console.log(full);
+             console.log(total);
+           
+       $('#chart2').highcharts({
+
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Free, reduced, and full price lunch 2010-2014'
+        },
+        subtitle: {
+            text: 'Durham County'
+        },
+        xAxis: {
+            categories: 
+               categories
+            ,
+            crosshair: true
+        },
+        yAxis: {
+            min:1000,
+            title: {
+                text: 'Durham schools lunch statistics'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Free',
+            data: free,
+
+        }, {
+            name: 'Reduced',
+            data: reduced,
+
+        },
+        
+        {
+            name: 'Full price',
+            data: full,
+
+        },
+        
+        {
+            name: 'Total for the year',
+            data: total,
+
+        }]
+    });
+};
+       }
+
+             </script>
+             
+             <body>
+                    chart 2
+             <div id="chart2" style="width:50%; height: 80%"></div>
+             </body>

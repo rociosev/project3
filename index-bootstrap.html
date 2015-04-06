@@ -1,0 +1,729 @@
+        <!DOCTYPE html>
+        
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            
+             <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            
+            
+            <title>Lunches served</title>
+            
+             <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- News and observer style sheet-->
+    <link href="css/styles-news-observer.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+            <link href="css/styles-news-observer-body.css" rel="stylesheet">
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+            
+            
+                <!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.6/css/jquery.dataTables.css">
+  
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!--<link href="table1.js" rel="stylesheet">
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.6/js/jquery.dataTables.js"></script>
+
+
+<!-- extras-->
+<link href="table1.js" rel="stylesheet">
+            <!--highcharts things-->
+             <script src="jquery-1.2.6.js" type="text/javascript"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+            <script src="http://code.highcharts.com/highcharts.js"></script>
+             <script>
+                
+                
+                var states = [];
+                var kentucky = [];
+                var georgia = [];
+                var southCarolina = [];
+                var northCarolina = [];
+                var tennessee = [];
+                var virginia = [];
+                
+            $(document).ready(function(){
+                console.log("chart1 ready");
+                loadXML();
+            });
+        
+        function loadXML(){
+              console.log("loadXML1 chart 1 has begun!");
+        //ajax call
+        $.ajax({
+        type:"GET",
+        url: "breakfast-served.xml",
+        dataType: "xml",
+        success: parseXML
+            })
+        }
+        
+        function parseXML(xml){
+        //loop through data
+        console.log("parseXML chart1");
+         $(xml).find("ROW").each(function(){ //index
+            console.log("loadXML chart1 has begun!");
+                    var $ROW = $(this);
+                    states.push($ROW.find("FIELD1").text());
+                    georgia.push(parseFloat(($ROW.find("FIELD2").text())));
+                    kentucky.push(parseFloat($ROW.find("FIELD3").text()));
+                    northCarolina.push(parseFloat($ROW.find("FIELD4").text()));
+                    southCarolina.push(parseFloat($ROW.find("FIELD5").text()));
+                    tennessee.push(parseFloat($ROW.find("FIELD6").text()));
+                
+     
+        buildchart();
+                      })
+        function buildchart(){
+        $('#chart1').highcharts({
+            title: {
+                text: 'School sponsored lunch participation',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Lunches served in 2010-2014',
+                x: -20
+            },
+            xAxis: {
+                title: {
+                    text: 'Fiscal year'
+                },
+                categories: [2010, 2011, 2012, 2013, 2014]
+            },
+            yAxis: {
+                title: {
+                    text: 'Lunches served (Millions)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+         
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+               verticalAlign: 'top',
+                x: -30,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Georgia',
+                data:  georgia
+            }, {
+                name: 'Kentucky',
+                data: kentucky
+            }, {
+                name: 'North Carolina',
+                data: northCarolina
+            },
+            {
+                name: 'South Carolina',
+                data: southCarolina
+            },
+            {
+                name: 'Tennessee',
+                data: tennessee
+            
+            }]
+        });
+    };
+        }
+            </script> <!-------------ENDS CHART 1------------------------------------------------->
+            
+             <!--START CHART 2------------------------------------------------------------------------>
+             <script>
+               
+                var free = [];
+                var reduced = [];
+                var full = [];
+                var total = [];
+                var categories = [];
+                  
+               
+               
+    
+           $(document).ready(function(){
+               console.log("chart 2 ready");
+               loadXML2();
+           });
+       
+       function loadXML2(){
+             console.log("loadXML for chart 2 has begun!");
+       //ajax call
+       $.ajax({
+       type:"GET",
+       url: "durhamLunchXML.xml",
+       dataType: "xml",
+       success: parseXML2
+       })
+       }
+       
+       function parseXML2(xml){
+       //loop through data
+       console.log("xml chart2");
+        $(xml).find("ROW").each(function(){ //index
+           console.log("loadXML chart2 has begun!");
+                   var $ROW = $(this);
+                   free.push(parseFloat(($ROW.find("FIELD2").text())));
+                   reduced.push(parseFloat(($ROW.find("FIELD3").text())));
+                   full.push(parseFloat($ROW.find("FIELD4").text()));
+                   total.push(parseFloat($ROW.find("FIELD5").text()));
+                   categories.push(parseFloat($ROW.find("FIELD1").text()))
+            
+      
+                     buildchart2();
+                     })
+   
+       function buildchart2(){
+           console.log("buildChart2 is loaded");
+           console.log(free);
+           console.log(reduced);
+           console.log(full);
+             console.log(total);
+           
+       $('#chart2').highcharts({
+
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Free, reduced, and full price lunch 2010-2014'
+        },
+        subtitle: {
+            text: 'Durham County'
+        },
+        xAxis: {
+            categories: 
+               categories
+            ,
+            crosshair: true
+        },
+        yAxis: {
+            min:1000,
+            title: {
+                text: 'Durham schools lunch statistics'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Free',
+            data: free,
+
+        }, {
+            name: 'Reduced',
+            data: reduced,
+
+        },
+        
+        {
+            name: 'Full price',
+            data: full,
+
+        },
+        
+        {
+            name: 'Total for the year',
+            data: total,
+
+        }]
+    });
+};
+       }
+
+   
+       </script>  <!--ENDS CHART 2------------------------------------------------>
+       
+            <!-- data table files-->
+            <!-- DataTables CSS 
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.6/css/jquery.dataTables.css">
+  
+<!-- jQuery 
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!--<link href="table1.js" rel="stylesheet">
+<!-- DataTables 
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.6/js/jquery.dataTables.js"></script>
+
+
+<!-- extras
+<link href="table1.js" rel="stylesheet">
+    <script>
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+    paging: true;
+    searching: true;
+} );
+    </script>
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>School name</th>
+            <th>percent of students on <br>
+            reduced lunch</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Bethesda</td>
+            <td>82.56%</td>
+        </tr>
+        <tr>
+            <td>Burton</td>
+            <td>91.38%</td>
+        </tr>
+        <tr>
+            <td>Club Blvd.</td>
+            <td>61.45%</td>
+        </tr>
+        <tr>
+            <td>Creekside</td>
+            <td>46.60%</td>
+        </tr>
+        <tr>
+            <td>Easley</td>
+            <td>24.66%</td>
+        </tr>
+        <tr>
+            <td>Eastway</td>
+            <td>99.08%</td>
+        </tr>
+        <tr>
+            <td>Eno Valley</td>
+            <td>87.32%</td>
+        </tr>
+        <tr>
+            <td>Fayetteville St.</td>
+            <td>98.15%</td>
+        </tr>
+        <tr>
+            <td>Forest View</td>
+            <td>60.99%</td>
+        </tr>
+        <tr>
+            <td>Glenn</td>
+            <td>94.74%</td>
+        </tr>
+        <tr>
+            <td>Harris</td>
+            <td>86.39%</td>
+        </tr>
+        <tr>
+            <td>Hillandale</td>
+            <td>59.26%</td>
+        </tr>
+         <tr>
+            <td>Holt</td>
+            <td>88.59%</td>
+        </tr>
+         <tr>
+            <td>Hope Valley</td>
+            <td>62.40%</td>
+        </tr>
+         <tr>
+            <td>Lakewood</td>
+            <td>98.75%</td>
+        </tr>
+          <tr>
+            <td>Little River</td>
+            <td>39.90%</td>
+        </tr>
+           <tr>
+            <td>Mangum</td>
+            <td>28.46%</td>
+        </tr>
+           <tr>
+            <td>Merrick-Moore</td>
+            <td>90.67%</td>
+        </tr>
+           <tr>
+            <td>Morehead</td>
+            <td>38.98%</td>
+        </tr>
+            <tr>
+            <td>Oak Grove</td>
+            <td>81.00%</td>
+        </tr>
+             <tr>
+            <td>Parkwood</td>
+            <td>72.23%</td>
+        </tr>
+              <tr>
+            <td>Pearson</td>
+            <td>88.51%</td>
+        </tr>
+               <tr>
+            <td>Pearsontown</td>
+            <td>31.06%</td>
+        </tr>
+                <tr>
+            <td>Powe</td>
+            <td>66.75%</td>
+        </tr>
+                 <tr>
+            <td>Sandy Ridge</td>
+            <td>57.95%</td>
+        </tr>
+                  <tr>
+            <td>Smith</td>
+            <td>99.51%</td>
+        </tr>
+                   <tr>
+            <td>Southwest</td>
+            <td>63.76%</td>
+        </tr>
+                    <tr>
+            <td>Spring Valley</td>
+            <td>66.40%</td>
+        </tr>
+ <tr>
+            <td>Spaulding</td>
+            <td>99.09%</td>
+        </tr>
+  <tr>
+            <td>Watts</td>
+            <td>46.73%</td>
+        </tr>
+  <!-- End of elementary schools-->
+   <!-- Start of middle schools
+     <tr>
+            <td>Broogden</td>
+            <td>76.10%</td>
+        </tr>
+       <tr>
+            <td>Carrington</td>
+            <td>64.35%</td>
+        </tr>
+         <tr>
+            <td>School for Creative Studies</td>
+            <td>52.87%</td>
+        </tr>
+  <tr>
+            <td>Githens</td>
+            <td>71.78%</td>
+        </tr>
+  <tr>
+            <td>Lakewood Montessori</td>
+            <td>48.28%</td>
+        </tr>
+  <tr>
+            <td>Lucas</td>
+            <td>63.72%</td>
+        </tr>
+  <tr>
+            <td>Lowe's Grove</td>
+            <td>83.62%</td>
+        </tr>
+<tr>
+            <td>Neal</td>
+            <td>89.25%</td>
+        </tr>
+<tr>
+            <td>Pearson Middle</td>
+            <td>91.38%</td>
+        </tr>
+<tr>
+            <td>Rogers-Herr</td>
+            <td>45.38%</td>
+        </tr>
+<tr>
+            <td>Shepard</td>
+            <td>71.78%</td>
+        </tr>
+<!-- End of middle schools-->
+<!-- Start of high schools
+<tr>
+            <td>Durham PLC</td>
+            <td>71.94%</td>
+        </tr>
+<tr>
+            <td>Durham Sch. of Arts</td>
+            <td>38.55%</td>
+        </tr>
+<tr>
+            <td>Hospital School</td>
+            <td>25.71%</td>
+        </tr>
+<tr>
+            <td>Early College at NCCU</td>
+            <td>57.86%</td>
+        </tr>
+<tr>
+            <td>Hillside</td>
+            <td>91.38%</td>
+        </tr>
+<tr>
+            <td>Hillside New Tech</td>
+            <td>52.62</td>
+        </tr>
+<tr>
+            <td>Jordan</td>
+            <td>41.85%</td>
+        </tr>
+<tr>
+            <td>Lakeview</td>
+            <td>95.40%</td>
+        </tr>
+<tr>
+            <td>Middle College High</td>
+            <td>10.94%</td>
+        </tr>
+<tr>
+            <td>Northern</td>
+            <td>60.79%</td>
+        </tr>
+<tr>
+            <td>Riverside</td>
+            <td>51.53%</td>
+        </tr>
+<tr>
+            <td>City of Medicine Acad.</td>
+            <td>56.36%</td>
+        </tr>
+<tr>
+            <td>Southern SES</td>
+            <td>73.38%</td>
+        </tr>
+<tr>
+            <td>Southern Engineering</td>
+            <td>63.04%</td>
+        </tr>
+  
+    </tbody>
+</table>
+             
+            --> 
+        
+        </head>
+        
+        <body>
+          <!--News and Observer header-----------------------------------------------------
+            <div class="container">
+           <div class="masthead-container col-sm-12 col-md-12 col-lg-12">
+            <!-- Things on the left of the top top bar -->
+                 <ul class="row top-nav-left col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <a class="menu1" href="#">
+                            SUSCRIBE
+                        </a>
+                        <a class="menu2" href="#">
+                            CUSTOMER SERVICE
+                        </a>
+                        <a class="menu3"href="#">
+                            ZONE AWARDS
+                        </a>
+                        <a class="menu4" href="#">
+                            PHOTO STORE
+                        </a>
+                    </div>
+             
+                    <div class="top-nav-right col-sm-6 col-md-6 col-lg-6">
+                        <a class="menu5" href="#">
+                            CLASSIFIEDS
+                        </a>
+                        <a class="menu6" href="#">
+                            JOBS
+                        </a>
+                        <a class="menu7"href="#">
+                            CARS
+                        </a>
+                        <a class="menu8" href="#">
+                        HOMES
+                        </a>
+                        <a class="menu9" href="#">
+                            APARTMENTS
+                        </a>  
+                      <a class="menu10" href="#">
+                            LEGALS
+                        </a>
+                 </ul>
+                    </div> <!-- closses top top row -->
+        <div class="row2 row">
+            <div class="weather col-sm-3 hidden-xs">
+                <p> weather widget</p>
+    </div>
+                 
+                 <div class="newspaper-title col-sm-6 col-md-5 col-lg6">
+            <a href="http://www.newsobserver.com/" target="_top">
+                <img src="http://www.newsobserver.com/static/images/newsobserver/logo-lg.png" alt="The News and Observer | NewsObserver.com" class="img-respinsibe center-block">
+            </a>
+        </div>    
+                    
+           </div>
+        
+            <div class="row3 row">
+             <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!--<div class="navbar-header">
+          <a class="navbar-brand" href="#">WebSiteName</a>
+        </div> -->
+        <div>
+          <ul class="nav navbar-nav">
+          <!--  <li class="active"><a href="#">Home</a></li>-->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Home
+         
+             <ul class="dropdown-menu">
+                <li><a href="#">HOME </a></li>
+                <li><a href="#">Weather</a></li>
+                <li><a href="#">About us</a></li> 
+              </ul>
+            </li>
+            
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">News
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+       
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sports
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+            
+                 <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Business
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+                 
+                    <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Politics
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+                      
+                    <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Living
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>          
+            
+                    <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opinion
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+          
+             <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Communities
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+             
+                     <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Obituaries
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+             
+                     <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Local Deals
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+             
+                     <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Classifieds
+             <ul class="dropdown-menu">
+                <li><a href="#"> <strong>News</strong>  </a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Chatham County</a></li> 
+              </ul>
+            </li>
+             
+        </div>
+      </div>
+    </nav>
+                     <div class="row">
+        <div class="ad col-ld-12 col-md-6 col-sm-0">
+          <a href="#"><img src="ad.png" alt="Smiley face" height="90" width="728"></a>
+          </div>   
+    </div>
+                     
+                     
+                    
+                    
+           </div>
+           </div>
+        
+    <!-- News and observer header ends-->        
+            <!---------------------------------------------------------------------------------------------------------------------------------------------------
+            <!-- Chart 1-->
+            <div class="chart1 col-lg-12 col-sm-12 col-md-12">
+        <div id="chart1" style="width:100%; height: 400%"></div>
+        </div>
+            <!-- chart 1 ends-->
+            <div class="text col-lg-12 col-md-12 col-sm-12">
+                
+           
+            <p>As years go by, the government has noticed and increase in student's participation in school lunch services offered.
+            We have analyzed the data provided by the United States Department of Agriculture, we have looked at how North Carolina measures up to its neighboring states and to the federal total.</p>
+    
+            </div> <!-- closses container-->
+            
+             chart 2
+             <div id="chart2" style="width:100%; height: 100%"></div>
+    
+       <!--
+           <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        
+        </body>
+        </html>
